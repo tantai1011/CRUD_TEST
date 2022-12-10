@@ -15,7 +15,6 @@ namespace CRUD_InASP
         SqlConnection connection = new SqlConnection("Data Source=10.4.3.230;Initial Catalog=CRUD_testDB;Persist Security Info=True;User ID=sa;Password=shc@1234");
         protected void Page_Load(object sender, EventArgs e)
         {
-            connection.Open();
             if (!IsPostBack)
             {
                 GetEmployeeList();
@@ -32,6 +31,7 @@ namespace CRUD_InASP
                 DateTime jdate = DateTime.Parse(txtJoiningDate.Text).Date;
 
                 SqlCommand command = new SqlCommand("Insert into EmployeeSetup_table values ('" + empID + "','" + empName + "','" + city + "','" + age + "','" + sex + "','" + jdate + "','" + contact + "')", connection);
+                connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
                 //ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Successfully saved');", true);
@@ -60,6 +60,7 @@ namespace CRUD_InASP
                 DateTime jdate = DateTime.Parse(txtJoiningDate.Text);
 
                 SqlCommand command = new SqlCommand("Update EmployeeSetup_table set EmpName = '" + empName + "', City = '" + city + "', Age = '" + age + "',Sex = '" + sex + "', JoiningDate = '" + jdate + "', Contact = '" + contact + "' where EmpID = '" + empID + "'", connection);
+                connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
                 //ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Successfully updated');", true);
@@ -75,6 +76,7 @@ namespace CRUD_InASP
                 int empID = int.Parse(txtID.Text);
 
                 SqlCommand command = new SqlCommand("Delete EmployeeSetup_table where EmpID = '" + empID + "'", connection);
+                connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
                 //ScriptManager.RegisterStartupScript(this, this.GetType(), "script", "alert('Successfully deleted');", true);
